@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight108 - Strategic Opportunities Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --light: #f3f4f6;
+            --dark: #1f2937;
+            --success: #10b981;
+            --gray: #9ca3af;
+            --light-gray: #e5e7eb;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9fafb;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--primary-dark);
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Main Content Styles */
+        main {
+            padding: 3rem 0;
+        }
+        
+        section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .intro, .subscribe, .premium {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intro::before, .subscribe::before, .premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+        
+        .intro::before {
+            background: var(--primary);
+        }
+        
+        .subscribe::before {
+            background: var(--secondary);
+        }
+        
+        .premium::before {
+            background: var(--accent);
+        }
+        
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Form Styles */
+        .subscribe-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 1.5rem 0;
+        }
+        
+        input[type="email"] {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        
+        button:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 1rem 0;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        
+        .btn:hover {
+            background: #db2777;
+            transform: translateY(-2px);
+            color: white;
+        }
+        
+        /* Ad Placeholder Styles */
+        .ad-placeholder {
+            background: var(--light);
+            border: 2px dashed var(--gray);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            color: var(--gray);
+            margin: 2rem 0;
+            transition: background 0.3s ease;
+        }
+        
+        .ad-placeholder:hover {
+            background: var(--light-gray);
+        }
+        
+        /* Footer Styles */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        /* Tabs for Free Insights */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1.5rem 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .insight-card {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .insight-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .subscribe-form {
+                flex-direction: column;
+            }
+            
+            input[type="email"] {
+                width: 100%;
+            }
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Stats Section */
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            background: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 2rem 0;
+        }
+        
+        .testimonial {
+            flex: 1;
+            min-width: 300px;
+            background: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+        }
+        
+        .testimonial::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            line-height: 1;
+        }
+        
+        .testimonial-text {
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--dark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-rocket"></i> Insight108 - Strategic Opportunities Dashboard</h1>
+            <p>Explore insights, reports, and startup opportunities with Insight108.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <h2><i class="fas fa-chart-line"></i> Free Insights</h2>
+            <p>Browse curated strategic insights for startups and investors exclusively at Insight108.</p>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="trending">Trending</div>
+                <div class="tab" data-tab="startups">Startups</div>
+                <div class="tab" data-tab="investment">Investment</div>
+            </div>
+            
+            <div class="tab-content active" id="trending">
+                <div class="insight-card">
+                    <h3>AI Integration in SaaS Startups</h3>
+                    <p>How artificial intelligence is becoming a must-have feature for SaaS companies seeking funding in 2025.</p>
+                    <a href="#">Read more →</a>
+                </div>
+                <div class="insight-card">
+                    <h3>ESG Investing Trends</h3>
+                    <p>Environmental, Social, and Governance factors are increasingly influencing investment decisions.</p>
+                    <a href="#">Read more →</a>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="startups">
+                <div class="insight-card">
+                    <h3>Early-stage Startup Valuation</h3>
+                    <p>Methods for determining fair valuation in seed and Series A funding rounds.</p>
+                    <a href="#">Read more →</a>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="investment">
+                <div class="insight-card">
+                    <h3>VC Funding Landscape</h3>
+                    <p>How venture capital investment patterns have shifted in post-pandemic markets.</p>
+                    <a href="#">Read more →</a>
+                </div>
+            </div>
+            
+            <!-- Stats Section -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">5,000+</div>
+                    <div class="stat-label">Monthly Visitors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Reports Published</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+            
+            <!-- Ad Placeholder -->
+            <div class="ad-placeholder">
+                <i class="fas fa-ad fa-2x"></i>
+                <p>Ad Space Available - Contact us to promote your business here</p>
+            </div>
+        </section>
+
+        <section class="subscribe">
+            <h2><i class="fas fa-envelope"></i> Get Full Reports</h2>
+            <p>Subscribe to Insight108 to access premium research and strategic opportunities reports.</p>
+            
+            <!-- Testimonials -->
+            <div class="testimonials">
+                <div class="testimonial">
+                    <div class="testimonial-text">"Insight108's reports have been invaluable for our investment decisions. Their analysis is always spot-on."</div>
+                    <div class="testimonial-author">- Sarah Johnson, Venture Capitalist</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">"As a startup founder, the strategic insights helped us pivot at the right time and secure funding."</div>
+                    <div class="testimonial-author">- Michael Chen, Tech Founder</div>
+                </div>
+            </div>
+            
+            <!-- Mailchimp subscription form -->
+            <form id="subscription-form" class="subscribe-form">
+                <input type="email" name="EMAIL" placeholder="Enter your email" required />
+                <button type="submit">Subscribe</button>
+            </form>
+            <p class="form-note"><small>We respect your privacy. Unsubscribe at any time.</small></p>
+            
+            <!-- Ad Placeholder -->
+            <div class="ad-placeholder">
+                <i class="fas fa-ad fa-2x"></i>
+                <p>Ad Space Available - Contact us to promote your business here</p>
+            </div>
+        </section>
+
+        <section class="premium">
+            <h2><i class="fas fa-star"></i> Premium Report</h2>
+            <p>Unlock the complete Insight108 PDF report with detailed insights, actionable strategies, and charts.</p>
+            <ul>
+                <li>Comprehensive market analysis</li>
+                <li>Emerging startup opportunities</li>
+                <li>Investment strategy recommendations</li>
+                <li>30-day money-back guarantee</li>
+            </ul>
+            <a href="#" class="btn"><i class="fas fa-lock-open"></i> Buy Full Report – ₹499</a>
+            
+            <!-- Ad Placeholder -->
+            <div class="ad-placeholder">
+                <i class="fas fa-ad fa-2x"></i>
+                <p>Ad Space Available - Contact us to promote your business here</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Insight108 | All Rights Reserved</p>
+            <p><small>Disclaimer: Insights are for informational purposes only. Please conduct your own research before making investment decisions.</small></p>
+        </div>
+    </footer>
+
+    <div class="notification" id="subscription-notification">
+        Thank you for subscribing! Please check your email to confirm.
+    </div>
+
+    <script>
+        // Tab functionality for Free Insights section
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.dataset.tab;
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show corresponding content
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === target) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Subscription form handling
+            const subscriptionForm = document.getElementById('subscription-form');
+            const notification = document.getElementById('subscription-notification');
+            
+            subscriptionForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // In a real implementation, you would send the data to Mailchimp
+                // Here we'll just show a success notification
+                notification.classList.add('show');
+                
+                // Reset form
+                subscriptionForm.reset();
+                
+                // Hide notification after 5 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>
